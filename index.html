@@ -12,7 +12,7 @@
   <div class="library">
     <header>
       <h1>Mini Library</h1>
-      <nav class="center">
+      <nav class="flex-center">
         <p class="theme">
           <img src="./assets/weather-night.svg" alt="theme icon" width="25px" height="25px">
         </p>
@@ -26,6 +26,7 @@
       <div class="books-container">
         <div class="book">
           <div class="favourite">
+            <img src="./assets/eye-plus-outline.svg" alt="read icon" width="25px" height="25px">
             <img src="./assets/star-plus-outline.svg" alt="favourite icon" width="25px" height="25px">
           </div>
   
@@ -39,7 +40,7 @@
           </div>
   
           <div class="num-of-pages">
-            <p>Number of Pages:</p>
+            <p>Total Pages:</p>
             <p>355</p>
           </div>
   
@@ -48,12 +49,13 @@
           </button>
   
           <button class="btn remove-btn">
-            Remove Book
+            REMOVE
           </button>
         </div>
 
         <div class="book">
           <div class="favourite">
+            <img src="./assets/eye-plus-outline.svg" alt="read icon" width="25px" height="25px">
             <img src="./assets/star-plus-outline.svg" alt="favourite icon" width="25px" height="25px">
           </div>
   
@@ -67,7 +69,7 @@
           </div>
   
           <div class="num-of-pages">
-            <p>Number of Pages:</p>
+            <p>Total Pages:</p>
             <p>355</p>
           </div>
   
@@ -76,12 +78,13 @@
           </button>
   
           <button class="btn remove-btn">
-            Remove Book
+            REMOVE
           </button>
         </div>
 
         <div class="book">
           <div class="favourite">
+            <img src="./assets/eye-plus-outline.svg" alt="read icon" width="25px" height="25px">
             <img src="./assets/star-plus-outline.svg" alt="favourite icon" width="25px" height="25px">
           </div>
   
@@ -95,7 +98,7 @@
           </div>
   
           <div class="num-of-pages">
-            <p>Number of Pages:</p>
+            <p>Total Pages:</p>
             <p>355</p>
           </div>
   
@@ -104,13 +107,13 @@
           </button>
   
           <button class="btn remove-btn">
-            Remove Book
+            REMOVE
           </button>
         </div>
       </div>
     </main>
 
-    <footer class="center">
+    <footer class="flex-center">
       <p>
         Copyright
         <span>&copy;</span>
@@ -118,6 +121,42 @@
         Terence
       </p>
     </footer>
+  </div>
+
+  <div class="form-container flex-column-center">
+    <form>
+      <div class="form-control flex-column-center">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder=" " maxlength="25" autofocus required>
+      </div>
+  
+      <div class="form-control flex-column-center">
+        <label for="author">Author</label>
+        <input type="text" id="author" name="author" placeholder=" " maxlength="25" required>
+      </div>
+  
+      <div class="form-control flex-column-center">
+        <label for="total-pages">Total Pages</label>
+        <input type="number" id="total-pages" name="total-pages" min="1" max="10000" placeholder=" " required>
+      </div>
+  
+      <div class="checkboxes-container">
+        <div class="form-control"> 
+          <input type="checkbox" id="read-status" name="read-status">
+          <label for="read-status">Read</label>
+        </div>
+    
+        <div class="form-control"> 
+          <input type="checkbox" id="favourite" name="favourite">
+          <label for="favourite">Favourite</label>
+        </div>
+      </div>
+    </form>
+
+    <div class="form-btns-container flex-column-center">
+      <button class="btn add-btn">ADD</button>
+      <button class="btn cancel-btn">CANCEL</button>
+    </div>
   </div>
 </body>
 </html>
