@@ -20,9 +20,9 @@ body {
 
 .library {
   min-height: 100vh;
-  background-color: rgb(255, 255, 236);
   display: flex;
   flex-direction: column;
+  background: linear-gradient(-125deg, rgb(184, 253, 255), rgb(255, 170, 255));
 }
 
 header {
@@ -30,13 +30,18 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 24px;
-  /* background-color: lightgreen; */
+  padding: 0 40px;
+  background-color: white;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+  z-index: 100;
+}
+
+header > h1 {
+  font-size: 2.15rem;
 }
 
 nav {
-  gap: 24px;
+  gap: 28px;
 }
 
 .theme, .log-in {
@@ -61,6 +66,8 @@ main {
 .add-book {
   place-self: center;
   font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .books-container {
@@ -86,9 +93,13 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 16px 16px 24px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 2px 3px 4px rgba(0, 0, 0, .35);
+  border-radius: 5px;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, .35), -1px 0 4px rgba(0, 0, 0, .35);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.book:hover {
+  transform: scale(1.015);
 }
 
 .favourite {
@@ -104,6 +115,12 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5px;
+}
+
+.author p:nth-of-type(2),
+.num-of-pages p:nth-of-type(2) {
+  font-weight: bold;
 }
 
 .btn {
@@ -112,19 +129,50 @@ main {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .btn:hover {
-  background-color: rgba(0, 0, 0, 0.15);
+  filter: brightness(1.15);
   transform: scale(1.05);
+}
+
+.read-btn {
+  background-color: black;
+  color: white;
+}
+
+.remove-btn {
+  background-color: crimson;
+  color: white;
 }
 
 footer {
   height: 5vh;
-  background-color: lightblue;
+  padding-bottom: 10px;
 }
 
 span:nth-of-type(1) {
   font-size: 2rem;
   vertical-align: sub;
+}
+
+/* Dark mode */
+header.dark {
+  background-color: black;
+  color: white;
+}
+
+.log-in.dark {
+  background-color: white;
+  color: black;
+  padding: 5px 10px;
+}
+
+.library.dark {
+  background: linear-gradient(-125deg, rgb(0, 247, 255),rgb(255, 0, 255));
+}
+
+footer p.dark {
+  color: white;
 }
