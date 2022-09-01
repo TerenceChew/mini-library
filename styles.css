@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Space+Mono&display=swap');
 *,
 *::before,
 *::after {
@@ -8,5 +9,122 @@
 
 body {
   min-height: 100vh;
+  font-family: 'PT Mono', monospace;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.library {
+  min-height: 100vh;
+  background-color: rgb(255, 255, 236);
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  /* background-color: lightgreen; */
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+}
+
+nav {
+  gap: 24px;
+}
+
+.theme, .log-in {
+  cursor: pointer;
+}
+
+.log-in {
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+}
+
+main {
+  height: calc(100vh - 13vh);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 24px;
+  padding: 24px;
+}
+
+.add-book {
+  place-self: center;
+  font-size: 1.25rem;
+}
+
+.books-container {
+  height: 98%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  overflow-y: scroll;
+}
+
+.books-container::-webkit-scrollbar {
+  display: none;
+}
+
+.book {
+  height: 375px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px 24px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, .35);
+}
+
+.favourite {
+  align-self: end;
+}
+
+.favourite > img {
+  cursor: pointer;
+}
+
+.title, .author, .num-of-pages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  width: 135px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
+footer {
+  height: 5vh;
+  background-color: lightblue;
+}
+
+span:nth-of-type(1) {
+  font-size: 2rem;
+  vertical-align: sub;
+}
