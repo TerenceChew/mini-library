@@ -31,12 +31,12 @@
           </div>
   
           <div class="title">
-            <h2>Harry Potter</h2>
+            <h2>Harry Potter and the prisoner of Azkaban</h2>
           </div>
           
           <div class="author">
             <p>Author:</p>
-            <p>JRR Tolken</p>
+            <p>J. K. Rowling</p>
           </div>
   
           <div class="num-of-pages">
@@ -44,13 +44,15 @@
             <p>355</p>
           </div>
   
-          <button class="btn read-btn">
-            READ
-          </button>
-  
-          <button class="btn remove-btn">
-            REMOVE
-          </button>
+          <div class="book-btns-container flex-column-center">
+            <button class="btn read-btn">
+              READ
+            </button>
+    
+            <button class="btn remove-btn">
+              REMOVE
+            </button>
+          </div>
         </div>
 
         <div class="book">
@@ -60,26 +62,28 @@
           </div>
   
           <div class="title">
-            <h2>Harry Potter</h2>
+            <h2>The Lord of the Rings</h2>
           </div>
           
           <div class="author">
             <p>Author:</p>
-            <p>JRR Tolken</p>
+            <p>J. R. R. Tolkien</p>
           </div>
   
           <div class="num-of-pages">
             <p>Total Pages:</p>
-            <p>355</p>
+            <p>3155</p>
           </div>
   
-          <button class="btn read-btn">
-            READ
-          </button>
-  
-          <button class="btn remove-btn">
-            REMOVE
-          </button>
+          <div class="book-btns-container flex-column-center">
+            <button class="btn read-btn">
+              READ
+            </button>
+    
+            <button class="btn remove-btn">
+              REMOVE
+            </button>
+          </div>
         </div>
 
         <div class="book">
@@ -89,26 +93,28 @@
           </div>
   
           <div class="title">
-            <h2>Harry Potter</h2>
+            <h2>Invincible</h2>
           </div>
           
           <div class="author">
             <p>Author:</p>
-            <p>JRR Tolken</p>
+            <p>Robert Kirkman</p>
           </div>
   
           <div class="num-of-pages">
             <p>Total Pages:</p>
-            <p>355</p>
+            <p>2425</p>
           </div>
   
-          <button class="btn read-btn">
-            READ
-          </button>
-  
-          <button class="btn remove-btn">
-            REMOVE
-          </button>
+          <div class="book-btns-container flex-column-center">
+            <button class="btn read-btn">
+              READ
+            </button>
+    
+            <button class="btn remove-btn">
+              REMOVE
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -127,17 +133,22 @@
     <form>
       <div class="form-control flex-column-center">
         <label for="title">Title</label>
-        <input type="text" id="title" name="title" placeholder=" " maxlength="25" autofocus required>
+        <input type="text" id="title" name="title" placeholder=" " maxlength="50" autofocus required>
       </div>
   
       <div class="form-control flex-column-center">
         <label for="author">Author</label>
-        <input type="text" id="author" name="author" placeholder=" " maxlength="25" required>
+        <input type="text" id="author" name="author" placeholder=" " maxlength="50" required>
       </div>
   
       <div class="form-control flex-column-center">
         <label for="total-pages">Total Pages</label>
         <input type="number" id="total-pages" name="total-pages" min="1" max="10000" placeholder=" " required>
+      </div>
+
+      <div class="form-control flex-column-center">
+        <label for="book-link">Link</label>
+        <input type="url" id="book-link" name="book-link" placeholder=" ">
       </div>
   
       <div class="checkboxes-container">

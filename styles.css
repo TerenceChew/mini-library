@@ -39,18 +39,19 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
+  gap: 32px;
+  padding: 10px 20px;
   background-color: white;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
   z-index: 100;
 }
 
 header > h1 {
-  font-size: 2.15rem;
+  font-size: min(calc(1rem + 1.5vw), 2rem);
 }
 
 nav {
-  gap: 28px;
+  gap: 24px;
 }
 
 .theme, .log-in {
@@ -58,6 +59,8 @@ nav {
 }
 
 .log-in {
+  width: 80px;
+  text-align: center;
   border-radius: 5px;
   background-color: black;
   color: white;
@@ -69,7 +72,7 @@ main {
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 24px;
-  padding: 24px;
+  padding: 10px;
 }
 
 .add-book {
@@ -86,7 +89,7 @@ main {
   align-items: start;
   gap: 32px;
   flex-wrap: wrap;
-  padding: 10px 0;
+  padding: 8px 0;
   overflow-y: scroll;
 }
 
@@ -102,13 +105,13 @@ main {
 }
 
 .book {
-  height: 375px;
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 16px 24px;
+  height: 455px;
+  width: 295px;
+  display: grid;
+  grid-template-rows: 30px 80px 80px 60px 100px;
+  place-items: center;
+  row-gap: 16px;
+  padding: 16px 16px 40px;
   border-radius: 5px;
   box-shadow: 2px 3px 4px rgba(0, 0, 0, .35), -1px 0 4px rgba(0, 0, 0, .35);
   background-color: rgba(0, 0, 0, 0.04);
@@ -119,7 +122,7 @@ main {
 }
 
 .favourite {
-  align-self: end;
+  place-self: end;
 }
 
 .favourite > img {
@@ -135,13 +138,19 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 7px;
+  word-break: break-word;
+  text-align: center;
 }
 
 .author p:nth-of-type(2),
 .num-of-pages p:nth-of-type(2) {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+}
+
+.book-btns-container {
+  gap: 16px;
 }
 
 .btn {
@@ -171,7 +180,7 @@ main {
 
 footer {
   height: 5vh;
-  padding-bottom: 10px;
+  padding-bottom: 14px;
 }
 
 footer span:nth-of-type(1) {
@@ -181,8 +190,8 @@ footer span:nth-of-type(1) {
 
 /* Form */
 .form-container {
-  height: 475px;
-  width: 285px;
+  height: 560px;
+  width: 315px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -201,30 +210,39 @@ form {
   gap: 28px;
 }
 
+.form-control > label {
+  font-weight: bold;
+}
+
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="url"] {
   appearance: none;
-  width: 200px;
+  width: 210px;
   height: calc(1rem + 15px);
   border-radius: 2px;
   outline: none;
   border: 1px solid rgba(0, 0, 0, 0.25);
   margin-top: 8px;
   text-indent: 8px;
+  font-family: 'PT Mono', monospace;
 }
 
 input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="url"]:focus {
   border: 1px solid black;
 }
 
 input[type="text"]:not(:focus):not(:placeholder-shown):valid,
-input[type="number"]:not(:focus):not(:placeholder-shown):valid {
+input[type="number"]:not(:focus):not(:placeholder-shown):valid,
+input[type="url"]:not(:focus):not(:placeholder-shown):valid {
   border: 1px solid rgb(61, 219, 12);
 }
 
 input[type="text"]:not(:focus):not(:placeholder-shown):invalid,
-input[type="number"]:not(:focus):not(:placeholder-shown):invalid {
+input[type="number"]:not(:focus):not(:placeholder-shown):invalid,
+input[type="url"]:not(:focus):not(:placeholder-shown):invalid {
   border: 1px solid rgb(255, 53, 53);
 }
 
@@ -237,7 +255,7 @@ input[type="number"]:not(:focus):not(:placeholder-shown):invalid {
 }
 
 .form-btns-container {
-  gap: 22px;
+  gap: 16px;
 }
 
 /* Dark mode */
