@@ -30,8 +30,6 @@ body {
   display: flex;
   flex-direction: column;
   background: linear-gradient(-125deg, rgb(177, 252, 255), rgb(255, 178, 255));
-  /* filter: grayscale(35%) blur(4px);
-  pointer-events: none; */
 }
 
 header {
@@ -75,11 +73,12 @@ main {
   padding: 10px;
 }
 
-.add-book {
+.add-new-book {
   place-self: center;
   font-size: 1.25rem;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .books-container {
@@ -121,19 +120,21 @@ main {
   transform: scale(1.015);
 }
 
-.favourite {
+.controls-container {
+  width: 65px;
   place-self: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.favourite > img {
+.controls-container > img {
   cursor: pointer;
 }
 
-.favourite > img:nth-of-type(1) {
-  margin-right: 8px;
-}
-
-.title, .author, .num-of-pages {
+.title-container,
+.author-container,
+.total-pages-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -143,8 +144,8 @@ main {
   text-align: center;
 }
 
-.author p:nth-of-type(2),
-.num-of-pages p:nth-of-type(2) {
+.author-container p:nth-of-type(2),
+.total-pages-container p:nth-of-type(2) {
   font-weight: bold;
   font-size: 1.05rem;
 }
@@ -190,6 +191,7 @@ footer span:nth-of-type(1) {
 
 /* Form */
 .form-container {
+  display: none;
   height: 560px;
   width: 315px;
   position: fixed;
@@ -202,7 +204,7 @@ footer span:nth-of-type(1) {
   background-color: white;
 }
 
-form {
+.add-book-form {
   display: flex;
   flex-direction: column;
   justify-content: center;

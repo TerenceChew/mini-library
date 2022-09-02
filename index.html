@@ -21,25 +21,25 @@
     </header>
 
     <main>
-      <p class="add-book">+ Add Book</p>
+      <p class="add-new-book">+ Add New Book</p>
 
       <div class="books-container">
         <div class="book">
-          <div class="favourite">
+          <div class="controls-container">
             <img src="./assets/eye-plus-outline.svg" alt="read icon" width="25px" height="25px">
             <img src="./assets/star-plus-outline.svg" alt="favourite icon" width="25px" height="25px">
           </div>
   
-          <div class="title">
+          <div class="title-container">
             <h2>Harry Potter and the prisoner of Azkaban</h2>
           </div>
           
-          <div class="author">
+          <div class="author-container">
             <p>Author:</p>
             <p>J. K. Rowling</p>
           </div>
   
-          <div class="num-of-pages">
+          <div class="total-pages-container">
             <p>Total Pages:</p>
             <p>355</p>
           </div>
@@ -56,21 +56,21 @@
         </div>
 
         <div class="book">
-          <div class="favourite">
+          <div class="controls-container">
             <img src="./assets/eye-plus-outline.svg" alt="read icon" width="25px" height="25px">
             <img src="./assets/star-plus-outline.svg" alt="favourite icon" width="25px" height="25px">
           </div>
   
-          <div class="title">
+          <div class="title-container">
             <h2>The Lord of the Rings</h2>
           </div>
           
-          <div class="author">
+          <div class="author-container">
             <p>Author:</p>
             <p>J. R. R. Tolkien</p>
           </div>
   
-          <div class="num-of-pages">
+          <div class="total-pages-container">
             <p>Total Pages:</p>
             <p>3155</p>
           </div>
@@ -87,21 +87,21 @@
         </div>
 
         <div class="book">
-          <div class="favourite">
+          <div class="controls-container">
             <img src="./assets/eye-plus-outline.svg" alt="read icon" width="25px" height="25px">
             <img src="./assets/star-plus-outline.svg" alt="favourite icon" width="25px" height="25px">
           </div>
   
-          <div class="title">
+          <div class="title-container">
             <h2>Invincible</h2>
           </div>
           
-          <div class="author">
+          <div class="author-container">
             <p>Author:</p>
             <p>Robert Kirkman</p>
           </div>
   
-          <div class="num-of-pages">
+          <div class="total-pages-container">
             <p>Total Pages:</p>
             <p>2425</p>
           </div>
@@ -123,27 +123,27 @@
       <p>
         Copyright
         <span>&copy;</span>
-        <span>2022</span>
+        <span id="curr-year"></span>
         Terence
       </p>
     </footer>
   </div>
 
   <div class="form-container flex-column-center">
-    <form>
+    <div class="add-book-form">
       <div class="form-control flex-column-center">
         <label for="title">Title</label>
-        <input type="text" id="title" name="title" placeholder=" " maxlength="50" autofocus required>
+        <input type="text" id="title" name="title" placeholder=" " maxlength="50" required>
       </div>
   
       <div class="form-control flex-column-center">
         <label for="author">Author</label>
-        <input type="text" id="author" name="author" placeholder=" " maxlength="50" required>
+        <input type="text" id="author" name="author" placeholder=" " maxlength="50">
       </div>
   
       <div class="form-control flex-column-center">
         <label for="total-pages">Total Pages</label>
-        <input type="number" id="total-pages" name="total-pages" min="1" max="10000" placeholder=" " required>
+        <input type="number" id="total-pages" name="total-pages" min="1" max="10000" placeholder=" ">
       </div>
 
       <div class="form-control flex-column-center">
@@ -153,16 +153,16 @@
   
       <div class="checkboxes-container">
         <div class="form-control"> 
-          <input type="checkbox" id="read-status" name="read-status">
-          <label for="read-status">Read</label>
+          <input type="checkbox" id="is-read" name="is-read">
+          <label for="is-read">Read</label>
         </div>
     
         <div class="form-control"> 
-          <input type="checkbox" id="favourite" name="favourite">
-          <label for="favourite">Favourite</label>
+          <input type="checkbox" id="is-favourite" name="is-favourite">
+          <label for="is-favourite">Favourite</label>
         </div>
       </div>
-    </form>
+    </div>
 
     <div class="form-btns-container flex-column-center">
       <button class="btn add-btn">ADD</button>
