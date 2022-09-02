@@ -52,8 +52,18 @@ nav {
   gap: 24px;
 }
 
-.theme, .log-in {
+.theme > img,
+.log-in {
   cursor: pointer;
+  transition: all .45s;
+}
+
+.theme > img:hover {
+  transform: scale(1.125);
+}
+
+.log-in:hover {
+  transform: scale(1.04);
 }
 
 .log-in {
@@ -79,10 +89,11 @@ main {
   font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
+  transition: all .45s;
 }
 
 .add-new-book:hover {
-  transform: scale(1.025);
+  transform: scale(1.1);
 }
 
 .books-container {
@@ -130,10 +141,11 @@ main {
 
 .controls-container > img {
   cursor: pointer;
+  transition: all .45s;
 }
 
 .controls-container > img:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .title-container,
@@ -166,6 +178,7 @@ main {
   cursor: pointer;
   font-weight: bold;
   font-size: .95rem;
+  transition: all .45s;
 }
 
 .btn:hover {
