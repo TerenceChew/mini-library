@@ -1,9 +1,11 @@
 // Variables
-const myLibrary = [{
-  title: 'HARRY POTTER',
-  author: 'JKR',
-  totalPages: 1555,
-}];
+let myLibrary = [];
+
+// {
+//   title: 'HARRY POTTER',
+//   author: 'JKR',
+//   totalPages: 1555,
+// }
 
 // General Selectors
 const library = document.querySelector('.library');
@@ -32,13 +34,14 @@ cancelBtn.addEventListener('pointerdown', resetAndHideForm);
 setFooterYear();
 
 // Book constructor
-function Book(title, author, totalPages, link, isRead, isFavourite) {
+function Book(title, author, totalPages, link, isRead, isFavourite, bookId) {
   this.title = title;
   this.author = author;
   this.totalPages = totalPages;
   this.link = link;
   this.isRead = isRead;
   this.isFavourite = isFavourite;
+  this.bookId = bookId;
 }
 
 // Setup functions
@@ -63,10 +66,10 @@ function getRandomIntInclusive(min, max) {
 }
 
 // Book functions
-function createBook(title, author, totalPages) {
+function createBook(title, author, totalPages, bookId) {
   let book = document.createElement('div');
-  
-  book.dataset.bookId = `${title}-${getRandomIntInclusive(1, 100000000)}`;
+
+  book.dataset.bookId = bookId;
 
   book.append(createControls(), createTitle(title), createAuthor(author), createTotalPages(totalPages), createBtns())
 
@@ -166,6 +169,10 @@ function removeBook(e) {
       book.remove();
     }
   })
+
+  myLibrary = myLibrary.filter(book => !book.bookId === bookId);
+
+  console.log(myLibrary)
 }
 
 // Form functions
@@ -179,16 +186,17 @@ function addBookToMyLibrary() {
   let title = titleInput.value;
   let author = authorInput.value;
   let totalPages = totalPagesInput.value;
+  let bookId = `${title}-${getRandomIntInclusive(1, 100000000)}`;
 
   if (title) {
-    const newBook = new Book(title, author, totalPages, bookLinkInput.value, isReadInput.checked, isFavouriteInput.checked);
+    let newBook = new Book(title, author, totalPages, bookLinkInput.value, isReadInput.checked, isFavouriteInput.checked, bookId);
 
     myLibrary.push(newBook);
-    createBook(title, author, totalPages);
+    createBook(title, author, totalPages, bookId);
     resetAndHideForm();
   }
   
-  // console.log(myLibrary);
+  console.log(myLibrary);
 }
 
 function resetAndHideForm() {
