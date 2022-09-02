@@ -59,7 +59,7 @@ nav {
 }
 
 .theme > img:hover {
-  transform: scale(1.125);
+  transform: scale(1.2);
 }
 
 .log-in:hover {
@@ -293,6 +293,6 @@ header.dark {
   background: linear-gradient(-125deg, rgb(0, 247, 255),rgb(255, 0, 255));
 }
 
-footer p.dark {
+.footer-text.dark {
   color: white;
 }

@@ -1,16 +1,14 @@
 // Variables
 let myLibrary = [];
 
-// {
-//   title: 'HARRY POTTER',
-//   author: 'JKR',
-//   totalPages: 1555,
-// }
-
 // General Selectors
+const header = document.querySelector('header');
+const themeIcon = document.querySelector('[alt="theme icon"]');
+const logInBtn = document.querySelector('.log-in');
 const library = document.querySelector('.library');
-const addNewBook = document.querySelector('.add-new-book');
+const footerText = document.querySelector('.footer-text');
 const currYearSpan = document.querySelector('#curr-year');
+const addNewBook = document.querySelector('.add-new-book');
 // Book Selectors
 const booksContainer = document.querySelector('.books-container');
 // Form Selectors
@@ -25,7 +23,8 @@ const addBtn = document.querySelector('.add-btn');
 const cancelBtn = document.querySelector('.cancel-btn');
 
 // Event listeners
-window.addEventListener('load', loadBooks); // Loop through library and create each book
+window.addEventListener('load', loadBooks);
+themeIcon.addEventListener('pointerdown', toggleTheme);
 addNewBook.addEventListener('pointerdown', displayForm);
 addBtn.addEventListener('pointerdown', addBookToMyLibrary);
 cancelBtn.addEventListener('pointerdown', resetAndHideForm);
@@ -65,6 +64,18 @@ function loadBooks() {
 
     createBook(title, author, totalPages, bookId);
   })
+}
+
+// Theme functions
+function toggleTheme(e) {
+  header.classList.toggle('dark');
+  logInBtn.classList.toggle('dark');
+  library.classList.toggle('dark');
+  footerText.classList.toggle('dark');
+
+  let isDarkMode = Array.from(header.classList).includes('dark') ? true : false;
+
+  themeIcon.src = isDarkMode ? './assets/white-balance-sunny.svg' : './assets/weather-night.svg';
 }
 
 // Utility functions
@@ -157,14 +168,14 @@ function createBtns() {
   let readBtn = document.createElement('button');
   let removeBtn = document.createElement('button');
 
-  removeBtn.addEventListener('pointerdown', removeBook);
-
   readBtn.innerText = 'READ';
   removeBtn.innerText = 'REMOVE';
 
   btnsContainer.classList.add('book-btns-container', 'flex-column-center');
   readBtn.classList.add('btn', 'read-btn');
   removeBtn.classList.add('btn', 'remove-btn');
+
+  removeBtn.addEventListener('pointerdown', removeBook);
 
   btnsContainer.append(readBtn, removeBtn);
 
