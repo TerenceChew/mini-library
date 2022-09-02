@@ -81,6 +81,10 @@ main {
   margin-top: 10px;
 }
 
+.add-new-book:hover {
+  transform: scale(1.025);
+}
+
 .books-container {
   height: 98%;
   display: flex;
@@ -116,12 +120,8 @@ main {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-.book:hover {
-  transform: scale(1.015);
-}
-
 .controls-container {
-  width: 65px;
+  width: 70px;
   place-self: end;
   display: flex;
   justify-content: space-between;
@@ -130,6 +130,10 @@ main {
 
 .controls-container > img {
   cursor: pointer;
+}
+
+.controls-container > img:hover {
+  transform: translateY(-2px);
 }
 
 .title-container,

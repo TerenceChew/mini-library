@@ -52,9 +52,9 @@ function setFooterYear() {
 
 function loadBooks() {
   myLibrary.forEach(book => {
-    let { title, author, totalPages } = book;
+    let { title, author, totalPages, bookId } = book;
 
-    createBook(title, author, totalPages);
+    createBook(title, author, totalPages, bookId);
   })
 }
 
@@ -184,8 +184,8 @@ function displayForm() {
 
 function addBookToMyLibrary() {
   let title = titleInput.value;
-  let author = authorInput.value;
-  let totalPages = totalPagesInput.value;
+  let author = authorInput.value ? authorInput.value : '-';
+  let totalPages = totalPagesInput.value ? totalPagesInput.value : '-';
   let bookId = `${title}-${getRandomIntInclusive(1, 100000000)}`;
 
   if (title) {
