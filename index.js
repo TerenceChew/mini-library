@@ -44,6 +44,15 @@ function Book(title, author, totalPages, link, isRead, isFavourite, bookId) {
   this.bookId = bookId;
 }
 
+// Book prototype functions
+Book.prototype.toggleRead = function() {
+  this.isRead = !this.isRead;
+}
+
+Book.prototype.toggleFavourite = function() {
+  this.isFavourite = !this.isFavourite;
+}
+
 // Setup functions
 function setFooterYear() {
   let currYear = new Date().getFullYear();
@@ -86,10 +95,12 @@ function createControls() {
   readIcon.src = './assets/eye-plus-outline.svg';
   readIcon.alt = 'read icon';
   readIcon.style.width, readIcon.style.height = '25px';
+  readIcon.addEventListener('pointerdown', handleReadIconClick);
 
   favouriteIcon.src = './assets/star-plus-outline.svg';
   favouriteIcon.alt = 'favourite icon';
   favouriteIcon.style.width, favouriteIcon.style.height = '25px';
+  favouriteIcon.addEventListener('pointerdown', handleFavouriteIconClick);
 
   controlsContainer.classList.add('controls-container');
 
@@ -173,6 +184,30 @@ function removeBook(e) {
   myLibrary = myLibrary.filter(book => book.bookId !== bookId);
 
   console.log(myLibrary);
+}
+
+function handleReadIconClick(e) {
+  let readIcon = e.target;
+  let bookId = e.target.parentElement.parentElement.dataset.bookId;
+  
+  myLibrary.forEach(book => {
+    if (book.bookId === bookId) {
+      book.toggleRead();
+      readIcon.src = book.isRead ? './assets/eye-check.svg' : './assets/eye-plus-outline.svg';
+    }
+  })
+}
+
+function handleFavouriteIconClick(e) {
+  let favouriteIcon = e.target;
+  let bookId = e.target.parentElement.parentElement.dataset.bookId;
+  
+  myLibrary.forEach(book => {
+    if (book.bookId === bookId) {
+      book.toggleFavourite();
+      favouriteIcon.src = book.isFavourite ? './assets/star.svg' : './assets/star-plus-outline.svg';
+    }
+  })
 }
 
 // Form functions

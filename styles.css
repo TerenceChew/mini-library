@@ -29,7 +29,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(-125deg, rgb(177, 252, 255), rgb(255, 178, 255));
+  background: linear-gradient(50deg, rgb(106, 250, 255), rgb(255, 159, 255));
 }
 
 header {
@@ -145,7 +145,7 @@ main {
 }
 
 .controls-container > img:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 .title-container,
