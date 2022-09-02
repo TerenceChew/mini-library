@@ -170,9 +170,9 @@ function removeBook(e) {
     }
   })
 
-  myLibrary = myLibrary.filter(book => !book.bookId === bookId);
+  myLibrary = myLibrary.filter(book => book.bookId !== bookId);
 
-  console.log(myLibrary)
+  console.log(myLibrary);
 }
 
 // Form functions
