@@ -46,6 +46,7 @@ header {
 
 header > h1 {
   font-size: min(calc(1rem + 1.5vw), 2rem);
+  transition: 1.55s;
 }
 
 nav {
@@ -206,6 +207,15 @@ footer span:nth-of-type(1) {
   vertical-align: sub;
 }
 
+.fa-github {
+  margin-left: 10px;
+  transition: 1.5s;
+}
+
+.fa-github:hover {
+  transform: rotate(720deg);
+}
+
 /* Form */
 .form-container {
   display: none;
@@ -294,5 +304,9 @@ header.dark {
 }
 
 .footer-text.dark {
+  color: white;
+}
+
+.footer-text.dark + .fa-github {
   color: white;
 }

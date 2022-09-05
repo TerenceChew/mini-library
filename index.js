@@ -255,7 +255,7 @@ const bookController = (() => {
 const formController = (() => {
   const displayForm = () => {
     formContainer.style.display = 'flex';
-    library.style.filter = 'grayscale(35%) blur(4px)';
+    library.style.filter = 'grayscale(35%) blur(2px)';
     library.style.pointerEvents = 'none';
   }
   const addBookToMyLibrary = () => {
@@ -273,6 +273,8 @@ const formController = (() => {
       myLibrary.push(newBook);
       bookController.createBook(title, author, totalPages, isRead, isFavourite, bookId);
       resetAndHideForm();
+    } else {
+      titleInput.style.border = '1px solid rgb(255, 53, 53)';
     }
     console.log(myLibrary);
   }
@@ -283,7 +285,8 @@ const formController = (() => {
     bookLinkInput.value = '';
     isReadInput.checked = false;
     isFavouriteInput.checked = false;
-  
+    
+    titleInput.style.border = '1px solid rgba(0, 0, 0, 0.25)';
     formContainer.style.display = 'none';
     library.style.filter = 'none';
     library.style.pointerEvents = 'auto';
