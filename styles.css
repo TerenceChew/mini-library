@@ -207,8 +207,12 @@ footer span:nth-of-type(1) {
   vertical-align: sub;
 }
 
-.fa-github {
+.footer-text + a {
   margin-left: 10px;
+  color: black;
+}
+
+.fa-github {
   transition: 1.5s;
 }
 
@@ -307,6 +311,6 @@ header.dark {
   color: white;
 }
 
-.footer-text.dark + .fa-github {
+.footer-text.dark + a .fa-github {
   color: white;
 }
