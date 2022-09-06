@@ -30,6 +30,7 @@ body {
   display: flex;
   flex-direction: column;
   background: linear-gradient(50deg, rgb(106, 250, 255), rgb(255, 159, 255));
+  position: relative;
 }
 
 header {
@@ -46,7 +47,7 @@ header {
 
 header > h1 {
   font-size: min(calc(1rem + 1.5vw), 2rem);
-  transition: 1.55s;
+  transition: 1.85s;
 }
 
 nav {
@@ -230,8 +231,8 @@ footer span:nth-of-type(1) {
 .form-container {
   display: none;
   height: 560px;
-  width: 315px;
-  position: fixed;
+  width: 300px;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
