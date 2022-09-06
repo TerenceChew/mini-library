@@ -290,6 +290,7 @@ const formController = (() => {
   let inputErrors = {};
   const displayForm = (book = null) => {
     formContainer.style.display = 'flex';
+    formContainer.scrollTop = 0;
     library.style.filter = 'grayscale(35%) blur(2px)';
     library.style.pointerEvents = 'none';
 

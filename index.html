@@ -40,8 +40,8 @@
     </footer>
   </div>
 
-  <form class="form-container flex-column-center">
-    <div class="add-book-form">
+  <div class="form-container">
+    <form class="add-book-form">
       <div class="form-control flex-column-center">
         <label for="title">Title</label>
         <input type="text" id="title" name="title" placeholder=" " maxlength="50" required autocomplete="off">
@@ -75,12 +75,12 @@
       </div>
 
       <input type="hidden" id="book-id" name="book-id">
-    </div>
 
-    <div class="form-btns-container flex-column-center">
-      <button type="submit" class="btn add-update-btn"></button>
-      <button type="button" class="btn cancel-btn">CANCEL</button>
-    </div>
-  </form>
+      <div class="form-btns-container flex-column-center">
+        <button type="submit" class="btn add-update-btn"></button>
+        <button type="button" class="btn cancel-btn">CANCEL</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
