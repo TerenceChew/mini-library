@@ -253,12 +253,17 @@ const bookController = (() => {
 
 // Form module
 const formController = (() => {
+  let inputErrors = {};
   const displayForm = () => {
     formContainer.style.display = 'flex';
     library.style.filter = 'grayscale(35%) blur(2px)';
     library.style.pointerEvents = 'none';
   }
   const addBookToMyLibrary = () => {
+    validateInputs(titleInput.value, totalPagesInput.value, bookLinkInput.value);
+    
+    if (Object.keys(inputErrors).length) return;
+
     let title = titleInput.value;
     let author = authorInput.value ? authorInput.value : '-';
     let totalPages = totalPagesInput.value ? totalPagesInput.value : '-';
@@ -267,16 +272,28 @@ const formController = (() => {
     let isFavourite = isFavouriteInput.checked;
     let bookId = `${title}-${utility.getRandomIntInclusive(1, 100000000)}`;
   
-    if (title) {
-      let newBook = Book(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
-  
-      myLibrary.push(newBook);
-      bookController.createBook(title, author, totalPages, isRead, isFavourite, bookId);
-      resetAndHideForm();
-    } else {
-      titleInput.style.border = '1px solid rgb(255, 53, 53)';
-    }
+    let newBook = Book(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
+
+    myLibrary.push(newBook);
+
+    bookController.createBook(title, author, totalPages, isRead, isFavourite, bookId);
+
+    resetAndHideForm();
+    
     console.log(myLibrary);
+  }
+  const validateInputs = (title, totalPages, bookLink) => {
+    inputErrors = {};
+
+    if (!title) {
+      inputErrors.titleError = 'Please enter a title!'
+    }
+    if (totalPages && totalPages > 10000) {
+      inputErrors.totalPagesError = 'Total pages must not exceed 10,000!';
+    }
+    if (bookLink && !/^(ftp|http|https):\/\/[^ "]+$/.test(bookLink)) {
+      inputErrors.bookLinkError = 'Invalid URL!';
+    }
   }
   const resetAndHideForm = () => {
     titleInput.value = '';
@@ -286,7 +303,6 @@ const formController = (() => {
     isReadInput.checked = false;
     isFavouriteInput.checked = false;
     
-    titleInput.style.border = '1px solid rgba(0, 0, 0, 0.25)';
     formContainer.style.display = 'none';
     library.style.filter = 'none';
     library.style.pointerEvents = 'auto';

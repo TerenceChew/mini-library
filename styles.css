@@ -64,7 +64,7 @@ nav {
 }
 
 .log-in:hover {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .log-in {
@@ -267,13 +267,14 @@ input[type="url"]:focus {
   border: 1px solid black;
 }
 
-input[type="text"]:not(:focus):not(:placeholder-shown):valid,
+input[type="text"]:focus:not(:placeholder-shown):valid,
+input[type="text"]:not(focus):not(:placeholder-shown):valid,
 input[type="number"]:not(:focus):not(:placeholder-shown):valid,
 input[type="url"]:not(:focus):not(:placeholder-shown):valid {
   border: 1px solid rgb(61, 219, 12);
 }
 
-input[type="text"]:not(:focus):not(:placeholder-shown):invalid,
+input[type="text"]:not(:focus):invalid,
 input[type="number"]:not(:focus):not(:placeholder-shown):invalid,
 input[type="url"]:not(:focus):not(:placeholder-shown):invalid {
   border: 1px solid rgb(255, 53, 53);
