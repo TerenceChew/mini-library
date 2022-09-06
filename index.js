@@ -111,12 +111,12 @@ const utility = (() => {
 
 // Book module
 const bookController = (() => {
-  const createBook = (title, author, totalPages, isRead, isFavourite, bookId) => {
+  const createBook = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
     let book = document.createElement('div');
   
     book.dataset.bookId = bookId;
   
-    book.append(createControls(isRead, isFavourite), createTitle(title), createAuthor(author), createTotalPages(totalPages), createBtns())
+    book.append(createControls(isRead, isFavourite), createTitle(title), createAuthor(author), createTotalPages(totalPages), createBtns(bookLink))
   
     book.classList.add('book');
   
@@ -183,11 +183,15 @@ const bookController = (() => {
   
     return totalPagesContainer;
   }
-  const createBtns = () => {
+  const createBtns = (bookLink) => {
     let btnsContainer = document.createElement('div'); 
-    let readBtn = document.createElement('button');
+    let readBtn = document.createElement('a');
     let removeBtn = document.createElement('button');
   
+    if (bookLink) {
+      readBtn.href = bookLink; 
+    }
+    
     readBtn.innerText = 'READ';
     removeBtn.innerText = 'REMOVE';
   
@@ -261,7 +265,7 @@ const formController = (() => {
   }
   const addBookToMyLibrary = () => {
     validateInputs(titleInput.value, totalPagesInput.value, bookLinkInput.value);
-    
+
     if (Object.keys(inputErrors).length) return;
 
     let title = titleInput.value;
@@ -276,7 +280,7 @@ const formController = (() => {
 
     myLibrary.push(newBook);
 
-    bookController.createBook(title, author, totalPages, isRead, isFavourite, bookId);
+    bookController.createBook(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
 
     resetAndHideForm();
     
