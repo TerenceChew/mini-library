@@ -18,27 +18,21 @@ const totalPagesInput = document.querySelector('#total-pages');
 const bookLinkInput = document.querySelector('#book-link');
 const isReadInput = document.querySelector('#is-read');
 const isFavouriteInput = document.querySelector('#is-favourite');
-const addBtn = document.querySelector('.add-btn');
+const bookIdInput = document.querySelector('#book-id');
+const addOrUpdateBtn = document.querySelector('.add-update-btn');
 const cancelBtn = document.querySelector('.cancel-btn');
 
 // Book factory
-const Book = (title, author, totalPages, link, isRead, isFavourite, bookId) => {
+const Book = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
   const getTitle = () => title;
   const getAuthor = () => author;
   const getTotalPages = () => totalPages;
-  // const getLink = () => link;
+  const getBookLink = () => bookLink;
   const getIsRead = () => isRead;
   const getIsFavourite = () => isFavourite;
   const getBookId = () => bookId;
-  // const editTitle = (newTitle) => {
-  //   title = newTitle;
-  // };
-  // const editAuthor = (newAuthor) => {
-  //   author = newAuthor;
-  // };
-  // const editTotalPages = (newTotalPages) => {
-  //   totalPages = newTotalPages;
-  // };
+  
+  // Toggling
   const toggleRead = () => {
     isRead = !isRead;
   };
@@ -46,15 +40,42 @@ const Book = (title, author, totalPages, link, isRead, isFavourite, bookId) => {
     isFavourite = !isFavourite;
   };
 
+  // Editing
+  const editTitle = (newTitle) => {
+    title = newTitle;
+  };
+  const editAuthor = (newAuthor) => {
+    author = newAuthor;
+  };
+  const editTotalPages = (newTotalPages) => {
+    totalPages = newTotalPages;
+  };
+  const editBookLink = (newBookLink) => {
+    bookLink = newBookLink;
+  };
+  const editIsRead = (newIsRead) => {
+    isRead = newIsRead;
+  };
+  const editIsFavourite = (newIsFavourite) => {
+    isFavourite = newIsFavourite;
+  };
+
   return {
     getTitle,
     getAuthor,
     getTotalPages,
+    getBookLink,
     getIsRead,
     getIsFavourite,
     getBookId,
     toggleRead,
-    toggleFavourite
+    toggleFavourite,
+    editTitle,
+    editAuthor,
+    editTotalPages,
+    editBookLink,
+    editIsRead,
+    editIsFavourite
   }
 }
 
@@ -83,10 +104,12 @@ const setupController = (() => {
     currYearSpan.innerText = `${currYear}`
   }
   const loadBooks = () => {
+    booksContainer.innerText = '';
+
     myLibrary.forEach(book => {
-      let { getTitle, getAuthor, getTotalPages, getBookId } = book;
+      let { getTitle, getAuthor, getTotalPages, getBookLink, getIsRead, getIsFavourite, getBookId } = book;
   
-      bookController.createBook(getTitle(), getAuthor(), getTotalPages(), getBookId());
+      bookController.createBook(getTitle(), getAuthor(), getTotalPages(), getBookLink(), getIsRead(), getIsFavourite(), getBookId());
     })
   }
 
@@ -124,8 +147,14 @@ const bookController = (() => {
   }
   const createControls = (isRead, isFavourite) => {
     let controlsContainer = document.createElement('div');
+    let editIcon = document.createElement('img');
     let readIcon = document.createElement('img');
     let favouriteIcon = document.createElement('img');
+
+    editIcon.src = './assets/pencil-outline.svg';
+    editIcon.alt = 'edit icon';
+    editIcon.style.width, editIcon.style.height = '25px';
+    editIcon.addEventListener('pointerdown', handleEditIconClick);
   
     readIcon.src = isRead ? './assets/eye-check.svg' : './assets/eye-plus-outline.svg';
     readIcon.alt = 'read icon';
@@ -139,7 +168,7 @@ const bookController = (() => {
   
     controlsContainer.classList.add('controls-container');
   
-    controlsContainer.append(readIcon, favouriteIcon);
+    controlsContainer.append(readIcon, favouriteIcon, editIcon);
   
     return controlsContainer;
   }
@@ -191,7 +220,7 @@ const bookController = (() => {
     if (bookLink) {
       readBtn.href = bookLink; 
     }
-    
+
     readBtn.innerText = 'READ';
     removeBtn.innerText = 'REMOVE';
   
@@ -219,6 +248,15 @@ const bookController = (() => {
   
     console.log(myLibrary);
   }
+  const handleEditIconClick = (e) => {
+    let bookId = e.target.parentElement.parentElement.dataset.bookId;
+
+    myLibrary.forEach(book => {
+      if (book.getBookId() === bookId) {
+        formController.displayForm(book);
+      }
+    })
+  }
   const handleReadIconClick = (e) => {
     let readIcon = e.target;
     let bookId = e.target.parentElement.parentElement.dataset.bookId;
@@ -244,46 +282,94 @@ const bookController = (() => {
 
   return {
     createBook,
-    createControls,
-    createTitle,
-    createAuthor,
-    createTotalPages,
-    createBtns,
-    removeBook,
-    handleReadIconClick,
-    handleFavouriteIconClick
   }
 })();
 
 // Form module
 const formController = (() => {
   let inputErrors = {};
-  const displayForm = () => {
+  const displayForm = (book = null) => {
     formContainer.style.display = 'flex';
     library.style.filter = 'grayscale(35%) blur(2px)';
     library.style.pointerEvents = 'none';
+
+    addOrUpdateBtn.innerText = book ? 'UPDATE' : 'ADD';
+
+    if (book) {
+      titleInput.value = book.getTitle();
+      authorInput.value = book.getAuthor();
+      totalPagesInput.value = book.getTotalPages();
+      bookLinkInput.value = book.getBookLink();
+      isReadInput.checked = book.getIsRead();
+      isFavouriteInput.checked = book.getIsFavourite();
+      bookIdInput.value = book.getBookId();
+    } 
   }
-  const addBookToMyLibrary = () => {
-    validateInputs(titleInput.value, totalPagesInput.value, bookLinkInput.value);
-
-    if (Object.keys(inputErrors).length) return;
-
+  const getInputs = () => {
     let title = titleInput.value;
-    let author = authorInput.value ? authorInput.value : '-';
-    let totalPages = totalPagesInput.value ? totalPagesInput.value : '-';
+    let author = authorInput.value;
+    let totalPages = totalPagesInput.value;
     let bookLink = bookLinkInput.value;
     let isRead = isReadInput.checked;
     let isFavourite = isFavouriteInput.checked;
+    let bookId = bookIdInput.value;
+    
+    return {
+      title,
+      author,
+      totalPages,
+      bookLink,
+      isRead,
+      isFavourite,
+      bookId
+    }
+  }
+  const determineAddOrUpdate = (e) => {
+    const { title, author, totalPages, bookLink, isRead, isFavourite, bookId } = getInputs();
+
+    validateInputs(title, totalPages, bookLink);
+
+    if (Object.keys(inputErrors).length) return;
+
+    e.target.innerText === 'ADD' ? addBookToMyLibrary(title, author, totalPages, bookLink, isRead, isFavourite) : updateBookInMyLibrary(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
+  }
+  const addBookToMyLibrary = (title, author, totalPages, bookLink, isRead, isFavourite) => {
+    let authorProcessed = author ? author : '-';
+    let totalPagesProcessed = totalPages ? totalPages : '-';
     let bookId = `${title}-${utility.getRandomIntInclusive(1, 100000000)}`;
   
-    let newBook = Book(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
+    let newBook = Book(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     myLibrary.push(newBook);
 
-    bookController.createBook(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
+    bookController.createBook(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     resetAndHideForm();
     
+    console.log(myLibrary);
+  }
+  const updateBookInMyLibrary = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
+    myLibrary.forEach(book => {
+      if (book.getBookId() === bookId) {
+        book.editTitle(title);
+        book.editAuthor(author);
+        book.editTotalPages(totalPages);
+        book.editBookLink(bookLink);
+        book.editIsRead(isRead);
+        book.editIsFavourite(isFavourite);
+      
+        // console.log('Just Updated');
+        // console.log(book.getTitle());
+        // console.log(book.getAuthor());
+        // console.log(book.getTotalPages());
+        // console.log(book.getBookLink());
+        // console.log(book.getIsRead());
+        // console.log(book.getIsFavourite());
+      }
+    })
+    resetAndHideForm();
+    setupController.loadBooks();
+
     console.log(myLibrary);
   }
   const validateInputs = (title, totalPages, bookLink) => {
@@ -306,6 +392,7 @@ const formController = (() => {
     bookLinkInput.value = '';
     isReadInput.checked = false;
     isFavouriteInput.checked = false;
+    bookIdInput.value = '';
     
     formContainer.style.display = 'none';
     library.style.filter = 'none';
@@ -314,16 +401,16 @@ const formController = (() => {
 
   return {
     displayForm,
-    addBookToMyLibrary,
-    resetAndHideForm
+    resetAndHideForm,
+    determineAddOrUpdate
   }
 })();
 
 // Event listeners
 window.addEventListener('load', setupController.loadBooks);
 themeIcon.addEventListener('pointerdown', themeController.toggleTheme);
-addNewBook.addEventListener('pointerdown', formController.displayForm);
-addBtn.addEventListener('pointerdown', formController.addBookToMyLibrary);
+addNewBook.addEventListener('pointerdown', () => formController.displayForm());
+addOrUpdateBtn.addEventListener('pointerdown', formController.determineAddOrUpdate);
 cancelBtn.addEventListener('pointerdown', formController.resetAndHideForm);
 
 // Setups on load

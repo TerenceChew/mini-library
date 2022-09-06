@@ -120,8 +120,8 @@ main {
 }
 
 .book {
-  height: 455px;
-  width: 295px;
+  height: 460px;
+  width: 300px;
   display: grid;
   grid-template-rows: 30px 80px 80px 60px 100px;
   place-items: center;
@@ -133,7 +133,7 @@ main {
 }
 
 .controls-container {
-  width: 70px;
+  width: 105px;
   place-self: end;
   display: flex;
   justify-content: space-between;
@@ -193,7 +193,7 @@ main {
   text-align: center;
 }
 
-.read-btn, .add-btn {
+.read-btn, .add-update-btn {
   background-color: black;
   color: white;
 }
