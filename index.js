@@ -154,17 +154,17 @@ const bookController = (() => {
     editIcon.src = './assets/pencil-outline.svg';
     editIcon.alt = 'edit icon';
     editIcon.style.width, editIcon.style.height = '25px';
-    editIcon.addEventListener('pointerdown', handleEditIconClick);
+    editIcon.addEventListener('pointerup', handleEditIconClick);
   
     readIcon.src = isRead ? './assets/eye-check.svg' : './assets/eye-plus-outline.svg';
     readIcon.alt = 'read icon';
     readIcon.style.width, readIcon.style.height = '25px';
-    readIcon.addEventListener('pointerdown', handleReadIconClick);
+    readIcon.addEventListener('pointerup', handleReadIconClick);
   
     favouriteIcon.src = isFavourite ? './assets/star.svg' : './assets/star-plus-outline.svg';
     favouriteIcon.alt = 'favourite icon';
     favouriteIcon.style.width, favouriteIcon.style.height = '25px';
-    favouriteIcon.addEventListener('pointerdown', handleFavouriteIconClick);
+    favouriteIcon.addEventListener('pointerup', handleFavouriteIconClick);
   
     controlsContainer.classList.add('controls-container');
   
@@ -228,7 +228,7 @@ const bookController = (() => {
     readBtn.classList.add('btn', 'read-btn');
     removeBtn.classList.add('btn', 'remove-btn');
   
-    removeBtn.addEventListener('pointerdown', removeBook);
+    removeBtn.addEventListener('pointerup', removeBook);
   
     btnsContainer.append(readBtn, removeBtn);
   
@@ -409,10 +409,10 @@ const formController = (() => {
 
 // Event listeners
 window.addEventListener('load', setupController.loadBooks);
-themeIcon.addEventListener('pointerdown', themeController.toggleTheme);
-addNewBook.addEventListener('pointerdown', () => formController.displayForm());
-addOrUpdateBtn.addEventListener('pointerdown', formController.determineAddOrUpdate);
-cancelBtn.addEventListener('pointerdown', formController.resetAndHideForm);
+themeIcon.addEventListener('pointerup', themeController.toggleTheme);
+addNewBook.addEventListener('pointerup', () => formController.displayForm());
+addOrUpdateBtn.addEventListener('pointerup', formController.determineAddOrUpdate);
+cancelBtn.addEventListener('pointerup', formController.resetAndHideForm);
 
 // Setups on load
 setupController.setFooterYear();
