@@ -12,6 +12,7 @@ const addNewBook = document.querySelector('.add-new-book');
 const booksContainer = document.querySelector('.books-container');
 // Form selectors
 const formContainer = document.querySelector('.form-container');
+const addBookForm = document.querySelector('.add-book-form');
 const titleInput = document.querySelector('#title');
 const authorInput = document.querySelector('#author');
 const totalPagesInput = document.querySelector('#total-pages');
@@ -294,6 +295,8 @@ const formController = (() => {
     library.style.filter = 'grayscale(35%) blur(2px)';
     library.style.pointerEvents = 'none';
 
+    titleInput.required = true;
+
     addOrUpdateBtn.innerText = book ? 'UPDATE' : 'ADD';
 
     if (book) {
@@ -304,7 +307,7 @@ const formController = (() => {
       isReadInput.checked = book.getIsRead();
       isFavouriteInput.checked = book.getIsFavourite();
       bookIdInput.value = book.getBookId();
-    } 
+    }
   }
   const getInputs = () => {
     let title = titleInput.value;
@@ -326,6 +329,8 @@ const formController = (() => {
     }
   }
   const determineAddOrUpdate = (e) => {
+    e.target.releasePointerCapture(e.pointerId);
+    // console.log(e.pointerId)
     const { title, author, totalPages, bookLink, isRead, isFavourite, bookId } = getInputs();
 
     validateInputs(title, totalPages, bookLink);
@@ -394,12 +399,14 @@ const formController = (() => {
     isReadInput.checked = false;
     isFavouriteInput.checked = false;
     bookIdInput.value = '';
+
+    titleInput.required = false;
     
     formContainer.style.display = 'none';
     library.style.filter = 'none';
     library.style.pointerEvents = 'auto';
   }
-
+  
   return {
     displayForm,
     resetAndHideForm,
@@ -411,8 +418,13 @@ const formController = (() => {
 window.addEventListener('load', setupController.loadBooks);
 themeIcon.addEventListener('pointerup', themeController.toggleTheme);
 addNewBook.addEventListener('pointerup', () => formController.displayForm());
+addBookForm.addEventListener('submit', (e) => {e.preventDefault()});
 addOrUpdateBtn.addEventListener('pointerup', formController.determineAddOrUpdate);
 cancelBtn.addEventListener('pointerup', formController.resetAndHideForm);
 
 // Setups on load
 setupController.setFooterYear();
+
+
+
+
