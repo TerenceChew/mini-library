@@ -327,14 +327,9 @@ header.dark {
   background: linear-gradient(-125deg, rgb(0, 247, 255),rgb(255, 0, 255));
 }
 
-.footer-text.dark {
+.add-new-book.dark, .footer-text.dark, .footer-text.dark + a .fa-github {
   color: white;
 }
-
-.footer-text.dark + a .fa-github {
-  color: white;
-}
-
 
 @media (min-width: 600px) {
   header {

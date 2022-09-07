@@ -86,6 +86,7 @@ const themeController = (() => {
     header.classList.toggle('dark');
     logInBtn.classList.toggle('dark');
     library.classList.toggle('dark');
+    addNewBook.classList.toggle('dark');
     footerText.classList.toggle('dark');
   
     let isDarkMode = Array.from(header.classList).includes('dark') ? true : false;
