@@ -329,8 +329,6 @@ const formController = (() => {
     }
   }
   const determineAddOrUpdate = (e) => {
-    // e.target.releasePointerCapture(e.pointerId);
-    // console.log(e.pointerId)
     const { title, author, totalPages, bookLink, isRead, isFavourite, bookId } = getInputs();
 
     validateInputs(title, totalPages, bookLink);
@@ -404,7 +402,7 @@ const formController = (() => {
     
     formContainer.style.display = 'none';
     library.style.filter = 'none';
-    library.style.pointerEvents = 'auto';
+    setTimeout(() => {library.style.pointerEvents = 'auto';}, 350);
   }
   
   return {
