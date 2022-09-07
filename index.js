@@ -329,7 +329,7 @@ const formController = (() => {
     }
   }
   const determineAddOrUpdate = (e) => {
-    e.target.releasePointerCapture(e.pointerId);
+    // e.target.releasePointerCapture(e.pointerId);
     // console.log(e.pointerId)
     const { title, author, totalPages, bookLink, isRead, isFavourite, bookId } = getInputs();
 

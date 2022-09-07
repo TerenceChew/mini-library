@@ -10,6 +10,7 @@
 body {
   min-height: 100vh;
   font-family: 'PT Mono', monospace;
+  touch-action: none;
 }
 
 .flex-center {
@@ -30,7 +31,6 @@ body {
   display: flex;
   flex-direction: column;
   background: linear-gradient(50deg, rgb(106, 250, 255), rgb(255, 159, 255));
-  touch-action: none;
 }
 
 header {
