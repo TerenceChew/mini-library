@@ -204,8 +204,7 @@ main {
 }
 
 footer {
-  height: 5vh;
-  padding-bottom: 14px;
+  height: max(40px, 5vh);
 }
 
 footer span:nth-of-type(1) {
