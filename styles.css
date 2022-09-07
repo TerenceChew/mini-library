@@ -172,7 +172,6 @@ main {
 }
 
 .btn {
-  width: 135px;
   padding: 11px 0;
   border: none;
   border-radius: 5px;
@@ -180,6 +179,7 @@ main {
   font-weight: bold;
   font-size: .95rem;
   transition: all .45s;
+  color: white;
 }
 
 .btn:hover {
@@ -191,16 +191,25 @@ main {
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
+} 
+
+.read-btn,
+.remove-btn,
+.add-update-btn,
+.cancel-btn {
+  width: 135px;
 }
 
-.read-btn, .add-update-btn {
+.read-btn,
+.add-update-btn,
+.no-btn {
   background-color: black;
-  color: white;
 }
 
-.remove-btn, .cancel-btn {
+.remove-btn,
+.cancel-btn,
+.yes-btn {
   background-color: crimson;
-  color: white;
 }
 
 footer {
@@ -309,6 +318,36 @@ input[type="url"]:not(:focus):not(:placeholder-shown):invalid {
 
 .form-btns-container {
   gap: 18px;
+}
+
+/* Confirmation box */
+.confirmation-box {
+  display: none;
+  gap: 35px;
+  padding: 30px 15px 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, .35), -1px 0 4px rgba(0, 0, 0, .35);
+  background-color: white;
+}
+
+.confirmation-box > p {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: rgb(255, 27, 27);
+  letter-spacing: .02rem;
+  
+}
+
+.confirmation-btns-container {
+  gap: 18px;
+}
+
+.confirmation-btn {
+  width: 100px;
 }
 
 /* Dark mode */

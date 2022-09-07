@@ -22,6 +22,10 @@ const isFavouriteInput = document.querySelector('#is-favourite');
 const bookIdInput = document.querySelector('#book-id');
 const addOrUpdateBtn = document.querySelector('.add-update-btn');
 const cancelBtn = document.querySelector('.cancel-btn');
+// Confirmation box selectors
+const confirmationBox = document.querySelector('.confirmation-box');
+const yesBtn = document.querySelector('.yes-btn');
+const noBtn = document.querySelector('.no-btn');
 
 // Book factory
 const Book = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
@@ -136,6 +140,7 @@ const utility = (() => {
 
 // Book module
 const bookController = (() => {
+  let currBookId = '';
   const createBook = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
     let book = document.createElement('div');
   
@@ -230,23 +235,23 @@ const bookController = (() => {
     readBtn.classList.add('btn', 'read-btn');
     removeBtn.classList.add('btn', 'remove-btn');
   
-    removeBtn.addEventListener('pointerup', removeBook);
+    removeBtn.addEventListener('pointerup', displayConfirmationBox);
   
     btnsContainer.append(readBtn, removeBtn);
   
     return btnsContainer;
   }
-  const removeBook = (e) => {
-    let bookId = e.target.parentElement.parentElement.dataset.bookId;
+  const removeBook = () => {
+    hideConfirmationBox();
     let currBooks = document.querySelectorAll('.book');
   
     currBooks.forEach(book => {
-      if (book.dataset.bookId === bookId) {
+      if (book.dataset.bookId === currBookId) {
         book.remove();
       }
     })
   
-    myLibrary = myLibrary.filter(book => book.getBookId() !== bookId);
+    myLibrary = myLibrary.filter(book => book.getBookId() !== currBookId);
   
     console.log(myLibrary);
   }
@@ -281,9 +286,23 @@ const bookController = (() => {
       }
     })
   }
+  const displayConfirmationBox = (e) => {
+    currBookId = e.target.parentElement.parentElement.dataset.bookId;
+
+    confirmationBox.style.display = 'flex';
+    library.style.filter = 'grayscale(35%) blur(2px)';
+    library.style.pointerEvents = 'none';
+  }
+  const hideConfirmationBox = () => {
+    confirmationBox.style.display = 'none';
+    library.style.filter = 'none';
+    setTimeout(() => {library.style.pointerEvents = 'auto';}, 350);
+  }
 
   return {
     createBook,
+    removeBook,
+    hideConfirmationBox
   }
 })();
 
@@ -420,6 +439,8 @@ addNewBook.addEventListener('pointerup', () => formController.displayForm());
 addBookForm.addEventListener('submit', (e) => {e.preventDefault()});
 addOrUpdateBtn.addEventListener('pointerup', formController.determineAddOrUpdate);
 cancelBtn.addEventListener('pointerup', formController.resetAndHideForm);
+yesBtn.addEventListener('pointerup', bookController.removeBook);
+noBtn.addEventListener('pointerup', bookController.hideConfirmationBox);
 
 // Setups on load
 setupController.setFooterYear();
