@@ -107,7 +107,7 @@ const themeController = (() => {
 const setupController = (() => {
   const setFooterYear = () => {
     let currYear = new Date().getFullYear();
-    currYearSpan.innerText = `${currYear}`
+    currYearSpan.innerText = currYear;
   }
   const loadBooks = () => {
     booksContainer.innerText = '';
