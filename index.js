@@ -1,32 +1,6 @@
 // Variables
 let myLibrary = [];
 
-// General selectors
-const library = document.querySelector('.library');
-const header = document.querySelector('header');
-const themeIcon = document.querySelector('[alt="theme icon"]');
-const logInBtn = document.querySelector('.log-in');
-const footerText = document.querySelector('.footer-text');
-const currYearSpan = document.querySelector('#curr-year');
-const addNewBook = document.querySelector('.add-new-book');
-const booksContainer = document.querySelector('.books-container');
-// Form selectors
-const formContainer = document.querySelector('.form-container');
-const addBookForm = document.querySelector('.add-book-form');
-const titleInput = document.querySelector('#title');
-const authorInput = document.querySelector('#author');
-const totalPagesInput = document.querySelector('#total-pages');
-const bookLinkInput = document.querySelector('#book-link');
-const isReadInput = document.querySelector('#is-read');
-const isFavouriteInput = document.querySelector('#is-favourite');
-const bookIdInput = document.querySelector('#book-id');
-const addOrUpdateBtn = document.querySelector('.add-update-btn');
-const cancelBtn = document.querySelector('.cancel-btn');
-// Confirmation box selectors
-const confirmationBox = document.querySelector('.confirmation-box');
-const yesBtn = document.querySelector('.yes-btn');
-const noBtn = document.querySelector('.no-btn');
-
 // Book factory
 const Book = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
   const getTitle = () => title;
@@ -86,6 +60,14 @@ const Book = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) 
 
 // Theme module
 const themeController = (() => {
+  // General selectors
+  const library = document.querySelector('.library');
+  const header = document.querySelector('header');
+  const themeIcon = document.querySelector('[alt="theme icon"]');
+  const logInBtn = document.querySelector('.log-in');
+  const footerText = document.querySelector('.footer-text');
+  const addNewBook = document.querySelector('.add-new-book');
+
   const toggleTheme = () => {
     header.classList.toggle('dark');
     logInBtn.classList.toggle('dark');
@@ -98,13 +80,15 @@ const themeController = (() => {
     themeIcon.src = isDarkMode ? './assets/white-balance-sunny.svg' : './assets/weather-night.svg';
   };
 
-  return {
-    toggleTheme
-  }
+  themeIcon.addEventListener('pointerup', toggleTheme);
 })();
 
 // Setup module
 const setupController = (() => {
+  // General selectors
+  const currYearSpan = document.querySelector('#curr-year');
+  const booksContainer = document.querySelector('.books-container');
+
   const setFooterYear = () => {
     let currYear = new Date().getFullYear();
     currYearSpan.innerText = currYear;
@@ -119,14 +103,16 @@ const setupController = (() => {
     })
   }
 
+  window.addEventListener('load', loadBooks);
+  setFooterYear();
+
   return {
-    setFooterYear,
     loadBooks
   }
 })();
 
-// Utility module
-const utility = (() => {
+// utility module
+const utilityController = (() => {
   const getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -140,7 +126,18 @@ const utility = (() => {
 
 // Book module
 const bookController = (() => {
+  // General selectors
+  const library = document.querySelector('.library');
+  const booksContainer = document.querySelector('.books-container');
+
+  // Confirmation box selectors
+  const confirmationBox = document.querySelector('.confirmation-box');
+  const yesBtn = document.querySelector('.yes-btn');
+  const noBtn = document.querySelector('.no-btn');
+
+  // Variables
   let currBookId = '';
+
   const createBook = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
     let book = document.createElement('div');
   
@@ -299,16 +296,36 @@ const bookController = (() => {
     setTimeout(() => {library.style.pointerEvents = 'auto';}, 350);
   }
 
+  yesBtn.addEventListener('pointerup', removeBook);
+  noBtn.addEventListener('pointerup', hideConfirmationBox);
+
   return {
-    createBook,
-    removeBook,
-    hideConfirmationBox
+    createBook
   }
 })();
 
 // Form module
 const formController = (() => {
+  // General selectors
+  const library = document.querySelector('.library');
+  const addNewBook = document.querySelector('.add-new-book');
+
+  // Form selectors
+  const formContainer = document.querySelector('.form-container');
+  const addBookForm = document.querySelector('.add-book-form');
+  const titleInput = document.querySelector('#title');
+  const authorInput = document.querySelector('#author');
+  const totalPagesInput = document.querySelector('#total-pages');
+  const bookLinkInput = document.querySelector('#book-link');
+  const isReadInput = document.querySelector('#is-read');
+  const isFavouriteInput = document.querySelector('#is-favourite');
+  const bookIdInput = document.querySelector('#book-id');
+  const addOrUpdateBtn = document.querySelector('.add-update-btn');
+  const cancelBtn = document.querySelector('.cancel-btn');
+
+  // Variables
   let inputErrors = {};
+
   const displayForm = (book = null) => {
     formContainer.style.display = 'flex';
     formContainer.scrollTop = 0;
@@ -360,7 +377,7 @@ const formController = (() => {
   const addBookToMyLibrary = (title, author, totalPages, bookLink, isRead, isFavourite) => {
     let authorProcessed = author ? author : '-';
     let totalPagesProcessed = totalPages ? totalPages : '-';
-    let bookId = `${title}-${utility.getRandomIntInclusive(1, 100000000)}`;
+    let bookId = `${title}-${utilityController.getRandomIntInclusive(1, 100000000)}`;
   
     let newBook = Book(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
@@ -381,14 +398,6 @@ const formController = (() => {
         book.editBookLink(bookLink);
         book.editIsRead(isRead);
         book.editIsFavourite(isFavourite);
-      
-        // console.log('Just Updated');
-        // console.log(book.getTitle());
-        // console.log(book.getAuthor());
-        // console.log(book.getTotalPages());
-        // console.log(book.getBookLink());
-        // console.log(book.getIsRead());
-        // console.log(book.getIsFavourite());
       }
     })
     resetAndHideForm();
@@ -424,26 +433,21 @@ const formController = (() => {
     library.style.filter = 'none';
     setTimeout(() => {library.style.pointerEvents = 'auto';}, 350);
   }
-  
+
+  addBookForm.addEventListener('submit', (e) => {e.preventDefault()});
+  addNewBook.addEventListener('pointerup', () => displayForm());
+  cancelBtn.addEventListener('pointerup', resetAndHideForm);
+  addOrUpdateBtn.addEventListener('pointerup', determineAddOrUpdate);
+
   return {
-    displayForm,
-    resetAndHideForm,
-    determineAddOrUpdate
+    displayForm
   }
 })();
 
-// Event listeners
-window.addEventListener('load', setupController.loadBooks);
-themeIcon.addEventListener('pointerup', themeController.toggleTheme);
-addNewBook.addEventListener('pointerup', () => formController.displayForm());
-addBookForm.addEventListener('submit', (e) => {e.preventDefault()});
-addOrUpdateBtn.addEventListener('pointerup', formController.determineAddOrUpdate);
-cancelBtn.addEventListener('pointerup', formController.resetAndHideForm);
-yesBtn.addEventListener('pointerup', bookController.removeBook);
-noBtn.addEventListener('pointerup', bookController.hideConfirmationBox);
 
-// Setups on load
-setupController.setFooterYear();
+
+
+
 
 
 
