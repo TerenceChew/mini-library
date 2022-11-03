@@ -220,9 +220,13 @@ const bookController = (() => {
     let btnsContainer = document.createElement('div'); 
     let readBtn = document.createElement('a');
     let removeBtn = document.createElement('button');
-  
+    
     if (bookLink) {
       readBtn.href = bookLink; 
+    } else {
+      readBtn.addEventListener("pointerup", () => {
+        alert("Please add a book link");
+      })
     }
 
     readBtn.innerText = 'READ';
@@ -250,7 +254,7 @@ const bookController = (() => {
   
     myLibrary = myLibrary.filter(book => book.getBookId() !== currBookId);
   
-    console.log(myLibrary);
+    console.log("myLibrary:", myLibrary);
   }
   const handleEditIconClick = (e) => {
     let bookId = e.target.parentElement.parentElement.dataset.bookId;
@@ -387,7 +391,7 @@ const formController = (() => {
 
     resetAndHideForm();
     
-    console.log(myLibrary);
+    console.log("myLibrary:", myLibrary);
   }
   const updateBookInMyLibrary = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
     myLibrary.forEach(book => {
@@ -403,7 +407,7 @@ const formController = (() => {
     resetAndHideForm();
     setupController.loadBooks();
 
-    console.log(myLibrary);
+    console.log("myLibrary:", myLibrary);
   }
   const validateInputs = (title, totalPages, bookLink) => {
     inputErrors = {};
