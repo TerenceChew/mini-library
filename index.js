@@ -111,7 +111,7 @@ const setupController = (() => {
   }
 })();
 
-// utility module
+// Utility module
 const utilityController = (() => {
   const getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
