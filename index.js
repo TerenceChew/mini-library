@@ -1,5 +1,10 @@
 // Variables
 let myLibrary = [];
+let myData = localStorage.myData ? JSON.parse(localStorage.myData) : [];
+
+onbeforeunload = () => {
+  localStorage.myData = JSON.stringify(myData);
+}
 
 // Book factory
 const Book = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
@@ -102,8 +107,20 @@ const setupController = (() => {
       bookController.createBook(getTitle(), getAuthor(), getTotalPages(), getBookLink(), getIsRead(), getIsFavourite(), getBookId());
     })
   }
+  const initializeMyLibrary = () => {
+    myData.forEach(bookData => {
+      const { title, author, totalPages, bookLink, isRead, isFavourite, bookId } = bookData;
 
-  window.addEventListener('load', loadBooks);
+      const book = Book(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
+
+      myLibrary.push(book);
+    })
+  }
+
+  window.addEventListener('load', () => {
+    initializeMyLibrary();
+    loadBooks();
+  });
   setFooterYear();
 
   return {
@@ -118,9 +135,13 @@ const utilityController = (() => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
+  const updateLocalStorage = () => {
+    localStorage.myData = JSON.stringify(myData);
+  };
 
   return {
-    getRandomIntInclusive
+    getRandomIntInclusive,
+    updateLocalStorage
   }
 })();
 
@@ -253,8 +274,15 @@ const bookController = (() => {
     })
   
     myLibrary = myLibrary.filter(book => book.getBookId() !== currBookId);
-  
+    
+    removeBookData();
+    utilityController.updateLocalStorage();
+
     console.log("myLibrary:", myLibrary);
+    console.log("myData:", myData);
+  }
+  const removeBookData = () => {
+    myData = myData.filter(bookData => bookData.bookId !== currBookId);
   }
   const handleEditIconClick = (e) => {
     let bookId = e.target.parentElement.parentElement.dataset.bookId;
@@ -275,6 +303,18 @@ const bookController = (() => {
         readIcon.src = book.getIsRead() ? './assets/eye-check.svg' : './assets/eye-plus-outline.svg';
       }
     })
+
+    myData = myData.map(bookData => {
+      return bookData.bookId === bookId ? 
+             {
+               ...bookData,
+               isRead: !bookData.isRead
+             } :
+             bookData;
+    });
+
+    console.log("myData:", myData);
+    utilityController.updateLocalStorage();
   }
   const handleFavouriteIconClick = (e) => {
     let favouriteIcon = e.target;
@@ -286,6 +326,18 @@ const bookController = (() => {
         favouriteIcon.src = book.getIsFavourite() ? './assets/star.svg' : './assets/star-plus-outline.svg';
       }
     })
+
+    myData = myData.map(bookData => {
+      return bookData.bookId === bookId ? 
+             {
+               ...bookData,
+               isFavourite: !bookData.isFavourite
+             } :
+             bookData;
+    });
+
+    console.log("myData:", myData);
+    utilityController.updateLocalStorage();
   }
   const displayConfirmationBox = (e) => {
     currBookId = e.target.parentElement.parentElement.dataset.bookId;
@@ -386,12 +438,28 @@ const formController = (() => {
     let newBook = Book(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     myLibrary.push(newBook);
+    
+    addBookDataToMyData(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     bookController.createBook(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     resetAndHideForm();
     
     console.log("myLibrary:", myLibrary);
+    console.log("myData:", myData);
+
+    utilityController.updateLocalStorage();
+  }
+  const addBookDataToMyData = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
+    myData.push({
+      title,
+      author,
+      totalPages,
+      bookLink,
+      isRead,
+      isFavourite,
+      bookId
+    });
   }
   const updateBookInMyLibrary = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
     myLibrary.forEach(book => {
@@ -407,8 +475,28 @@ const formController = (() => {
     resetAndHideForm();
     setupController.loadBooks();
 
+    updateBookDataInMyData(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
+
     console.log("myLibrary:", myLibrary);
+    console.log("myData:", myData);
+
+    utilityController.updateLocalStorage();
   }
+  const updateBookDataInMyData = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
+    myData = myData.map(bookData => {
+      return bookData.bookId === bookId ?
+             {
+              title,
+              author,
+              totalPages,
+              bookLink,
+              isRead,
+              isFavourite,
+              bookId
+             } :
+             bookData;
+    });
+  }  
   const validateInputs = (title, totalPages, bookLink) => {
     inputErrors = {};
 
