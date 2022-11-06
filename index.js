@@ -2,9 +2,12 @@
 let myLibrary = [];
 let myData = localStorage.myData ? JSON.parse(localStorage.myData) : [];
 
-onbeforeunload = () => {
-  localStorage.myData = JSON.stringify(myData);
-}
+onload = () => {
+  setupController.setFooterYear();
+  setupController.initializeMyLibrary();
+  setupController.loadBooks();
+  onbeforeunload = utilityController.updateLocalStorage;
+};
 
 // Book factory
 const Book = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
@@ -117,14 +120,10 @@ const setupController = (() => {
     })
   }
 
-  window.addEventListener('load', () => {
-    initializeMyLibrary();
-    loadBooks();
-  });
-  setFooterYear();
-
   return {
-    loadBooks
+    loadBooks,
+    initializeMyLibrary,
+    setFooterYear
   }
 })();
 
@@ -136,8 +135,21 @@ const utilityController = (() => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
   const updateLocalStorage = () => {
-    localStorage.myData = JSON.stringify(myData);
+    localStorage.myData = JSON.stringify(transformMyLibraryToMyData());
   };
+  const transformMyLibraryToMyData = () => {
+    const myData = myLibrary.map(book => ({
+      title: book.getTitle(),
+      author: book.getAuthor(),
+      totalPages: book.getTotalPages(),
+      bookLink: book.getBookLink(),
+      isRead: book.getIsRead(),
+      isFavourite: book.getIsFavourite(),
+      bookId: book.getBookId()
+    }));
+
+    return myData;
+  }
 
   return {
     getRandomIntInclusive,
@@ -275,14 +287,9 @@ const bookController = (() => {
   
     myLibrary = myLibrary.filter(book => book.getBookId() !== currBookId);
     
-    removeBookData();
     utilityController.updateLocalStorage();
 
     console.log("myLibrary:", myLibrary);
-    console.log("myData:", myData);
-  }
-  const removeBookData = () => {
-    myData = myData.filter(bookData => bookData.bookId !== currBookId);
   }
   const handleEditIconClick = (e) => {
     let bookId = e.target.parentElement.parentElement.dataset.bookId;
@@ -304,16 +311,6 @@ const bookController = (() => {
       }
     })
 
-    myData = myData.map(bookData => {
-      return bookData.bookId === bookId ? 
-             {
-               ...bookData,
-               isRead: !bookData.isRead
-             } :
-             bookData;
-    });
-
-    console.log("myData:", myData);
     utilityController.updateLocalStorage();
   }
   const handleFavouriteIconClick = (e) => {
@@ -327,16 +324,6 @@ const bookController = (() => {
       }
     })
 
-    myData = myData.map(bookData => {
-      return bookData.bookId === bookId ? 
-             {
-               ...bookData,
-               isFavourite: !bookData.isFavourite
-             } :
-             bookData;
-    });
-
-    console.log("myData:", myData);
     utilityController.updateLocalStorage();
   }
   const displayConfirmationBox = (e) => {
@@ -438,28 +425,14 @@ const formController = (() => {
     let newBook = Book(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     myLibrary.push(newBook);
-    
-    addBookDataToMyData(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     bookController.createBook(title, authorProcessed, totalPagesProcessed, bookLink, isRead, isFavourite, bookId);
 
     resetAndHideForm();
     
     console.log("myLibrary:", myLibrary);
-    console.log("myData:", myData);
 
     utilityController.updateLocalStorage();
-  }
-  const addBookDataToMyData = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
-    myData.push({
-      title,
-      author,
-      totalPages,
-      bookLink,
-      isRead,
-      isFavourite,
-      bookId
-    });
   }
   const updateBookInMyLibrary = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
     myLibrary.forEach(book => {
@@ -475,28 +448,10 @@ const formController = (() => {
     resetAndHideForm();
     setupController.loadBooks();
 
-    updateBookDataInMyData(title, author, totalPages, bookLink, isRead, isFavourite, bookId);
-
     console.log("myLibrary:", myLibrary);
-    console.log("myData:", myData);
 
     utilityController.updateLocalStorage();
-  }
-  const updateBookDataInMyData = (title, author, totalPages, bookLink, isRead, isFavourite, bookId) => {
-    myData = myData.map(bookData => {
-      return bookData.bookId === bookId ?
-             {
-              title,
-              author,
-              totalPages,
-              bookLink,
-              isRead,
-              isFavourite,
-              bookId
-             } :
-             bookData;
-    });
-  }  
+  } 
   const validateInputs = (title, totalPages, bookLink) => {
     inputErrors = {};
 
