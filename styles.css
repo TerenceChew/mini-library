@@ -33,7 +33,7 @@ body {
 }
 
 header {
-  height: min(75px, 11.5vh);
+  height: 75px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,7 +77,7 @@ nav {
 }
 
 main {
-  height: calc(100vh - 75px - 5vh);
+  height: calc(100vh - 75px - 50px);
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 24px;
@@ -213,7 +213,7 @@ main {
 }
 
 footer {
-  height: max(40px, 5vh);
+  height: 50px;
 }
 
 footer span:nth-of-type(1) {
