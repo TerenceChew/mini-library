@@ -1,4 +1,4 @@
-# Mini Library
+# Mini-Library
 An app built to practice the use of Factory Functions & Module Pattern
 
 ## Usage
